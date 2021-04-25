@@ -35,7 +35,6 @@ const initialize = () => {
                 , message: "What would you like to do?"
                 , choices: [
                     "View All Employees"
-                    , "View All Employees by Department"
                     , "View All Employees by Role"
                     , "View All Departments"
                     , "Add an Employee"
@@ -49,9 +48,6 @@ const initialize = () => {
             switch (answer.init){
                 case "View All Employees":
                     viewEmployees();
-                break;
-                case "View All Employees by Department":
-                    viewDeparments();
                 break;
                 case "View All Employees by Role":
                     viewRoles();
@@ -77,9 +73,6 @@ const initialize = () => {
             }
         });
 }
-
-//  * View departments, roles, employees
-
 
 const viewEmployees = () => {
     const query = "SELECT DISTINCT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id;"
@@ -139,8 +132,6 @@ const viewRoles = () => {
         });
 }
 
-// * Add departments, roles, employees - Douglas Says:
-
 const addDepartment = () => {
     inquirer
         .prompt([
@@ -162,22 +153,7 @@ const addDepartment = () => {
                         initialize();
                     });
             });
-    };
-
-// const addRole = () => {
-//     inquirer
-//         .prompt([
-//             { 
-//                 name: "departmentName"
-//                 , type: "input"
-//                 , message: "Which department does this new role belong to?"
-//             },
-//             {
-//                 name: "lastName"
-//                 , type: "input"
-//                 , message: "What is the Employees Last Name?"
-//             },
-            
+    };        
 
 const addEmployee = () => {
     inquirer

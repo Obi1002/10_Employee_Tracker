@@ -28,13 +28,13 @@ This project was completed on April 24, 2021.
 MIT
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sdca/advdv)
 
-<!-- # Deployment
-[Link](https://hidden-chamber-92909.herokuapp.com/) -->
+# Deployment
+[Link](https://drive.google.com/file/d/1O19XE915vSMxjYLlFQsY-bE4j2_3muhJ/view?usp=sharing)
 
 # Usage
 When you open the terminal, you will be able to view all employees, view employees by department and by role, view all departments, add new employees and new Departments, update an employee's information and remove employees. 
 
-<!-- Add screenShot
+Add screenShot
 # Preview of the App
 * This is how the app looks
-![NoteTakingApp Screenshot](./Assets\NoteTakerApp.PNG) -->
+![NoteTakingApp Screenshot](./assets/trackerSnapshot.PNG)
