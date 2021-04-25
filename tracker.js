@@ -37,7 +37,9 @@ const initialize = () => {
                     "View All Employees"
                     , "View All Employees by Department"
                     , "View All Employees by Role"
+                    , "View All Departments"
                     , "Add an Employee"
+                    , "Add a new Department"
                     , "Update an Employee's Role"
                     , "Remove an Employee"
                     , "Exit"
@@ -54,8 +56,14 @@ const initialize = () => {
                 case "View All Employees by Role":
                     viewRoles();
                 break;
+                case "View All Departments":
+                    viewJustDepartments();
+                break;
                 case "Add an Employee":
                     addEmployee();
+                break;
+                case "Add a new Department":
+                    addDepartment();
                 break;
                 case "Update an Employee's Role":
                     updateEmployee();
@@ -70,6 +78,9 @@ const initialize = () => {
         });
 }
 
+//  * View departments, roles, employees
+
+
 const viewEmployees = () => {
     const query = "SELECT DISTINCT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id;"
     connection.query(
@@ -81,40 +92,15 @@ const viewEmployees = () => {
         });
 };
 
-const viewDeparments = () => {
+const viewJustDepartments = () => {
     const query = "SELECT * FROM department;"
     connection.query(
         query
         , (err, res) => {
             if (err) throw err;
-            inquirer
-                .prompt([
-                    {
-                        name:"choice"
-                        , type: "list"
-                        , message: "Which Department would you like to view?"
-                        , choices: () => {
-                            var choiceArray = [];
-                            for (const item of res) {
-                                choiceArray.push(item.name)
-                            }
-                            return choiceArray;
-                        }
-                    }
-                ]).then(data => {
-                    const query = "SELECT employee.id, employee.first_name, employee.last_name, role.title , department.name, role.salary FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id WHERE ?;"
-                    connection.query(
-                        query
-                        , [{
-                            "department.name": data.choice
-                        }]
-                        , (err, res) => {
-                            if (err) throw err;
-                            console.table(res)
-                            initialize();
-                        });
-                })
-        });
+            console.table(res)
+            initialize()
+            });
 }
 
 const viewRoles = () => {
@@ -152,6 +138,46 @@ const viewRoles = () => {
                 });
         });
 }
+
+// * Add departments, roles, employees - Douglas Says:
+
+const addDepartment = () => {
+    inquirer
+        .prompt([
+            { 
+                name: "departmentName"
+                , type: "input"
+                , message: "Which new department is being added?"
+            }    
+        ]).then ((data) => {
+        const query = "INSERT INTO department SET ?;"
+                connection.query(
+                    query
+                    , {
+                        name: data.departmentName
+                    }
+                    , err => {
+                        if (err)throw err;
+                        console.log("Department Added!")
+                        initialize();
+                    });
+            });
+    };
+
+// const addRole = () => {
+//     inquirer
+//         .prompt([
+//             { 
+//                 name: "departmentName"
+//                 , type: "input"
+//                 , message: "Which department does this new role belong to?"
+//             },
+//             {
+//                 name: "lastName"
+//                 , type: "input"
+//                 , message: "What is the Employees Last Name?"
+//             },
+            
 
 const addEmployee = () => {
     inquirer
